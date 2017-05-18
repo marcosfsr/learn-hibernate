@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
@@ -15,6 +16,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -28,8 +31,10 @@ public class Usuario {
     private EstadoCivil estadoCivil;
     //private Endereco endereco;
     //private Endereco enderecoComercial;
-    private List <Endereco> enderecos = new ArrayList<>();
+    //private List <Endereco> enderecos = new ArrayList<>();
+    private Veiculo veiculo;
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
@@ -77,14 +82,25 @@ public class Usuario {
         this.estadoCivil = estadoCivil;
     }
     
-    @ElementCollection(fetch = FetchType.EAGER)
+    //como um usuário não necessariamente possui um veiculo, o correto seria manter essa notação (OneToOne) apenas na classe Veiculo
+    @OneToOne(cascade = CascadeType.ALL) //usando essa opção cascade não preciso salver o veículo separadamente (session.save(veiculo);)
+    @JoinColumn(name="id_veiculo") //essa notação @JoinColumn permite definir o nome da coluna onde o id (FK) será inserido (útil em caso de coluna já existente)
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+        
+    /*@ElementCollection(fetch = FetchType.EAGER)
     public List<Endereco> getEnderecos() {
         return enderecos;
     }
 
     public void setEnderecos(List<Endereco> enderecos) {
         this.enderecos = enderecos;
-    }
+    }*/
     
     /*@Embedded
     @AttributeOverrides({

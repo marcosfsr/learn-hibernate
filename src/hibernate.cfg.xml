@@ -21,12 +21,12 @@
         <property name="format_sql">false</property>
 
         <!-- Drop and re-create the database schema on startup -->
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create</property>
 
         <!-- Names the annotated entity class -->
         <mapping class="curso.hibernate.modelo.Usuario"/>
-        <!--<mapping class="curso.hibernate.modelo.Veiculo"/>
-        <mapping class="curso.hibernate.modelo.Funcionario"/>
+        <mapping class="curso.hibernate.modelo.Veiculo"/>
+        <!--<mapping class="curso.hibernate.modelo.Funcionario"/>
         <mapping class="curso.hibernate.modelo.Projeto"/>
 		
         <mapping class="curso.hibernate.heranca.VeiculoHeranca"/>
